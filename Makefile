@@ -9,5 +9,5 @@ CXXFLAGS ?= --std=c++17 -Wall -Werror -pedantic -g -fsanitize=address -fsanitize
 CXXFLAGS += -fsanitize=address -lncurses
 
 
-main.exe: main.cpp
+main.exe: main.cpp board.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@

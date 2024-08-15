@@ -1,28 +1,28 @@
 #include <iostream>
 #include <ncurses.h> 
+#include <thread>
+#include <chrono>
+
+#include "board.hpp"
 
 using namespace std;
 
 int main(int argc, char* argv[]){
     initscr();
-    noecho();
-    cbreak();
-
-    int ymax, xmax;
-    getmaxyx(stdscr, ymax, xmax);
-
-    WINDOW * inputwin = newwin(3, xmax-12, ymax-5, 5);
-    box(inputwin, 0, 0);
     refresh();
-    wrefresh(inputwin);
+    Board b;
+    b.initialize();
+    b.addBorder();
 
-    int c = wgetch(inputwin);
-    if (c == 'j'){
-        wprintw(inputwin, "You pressed J");
-        wrefresh(inputwin);
+    b.addAt(1, 1, '#');
+    b.refresh();
+    for (int i = 0; i < 5; i++){
+        this_thread::sleep_for(chrono::seconds(1));
+        b.addAt(1, i+2, '#');
+        b.refresh();
     }
-    getch();
 
+    getch();
     endwin();
-    return 0;
+
 }
