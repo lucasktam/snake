@@ -3,26 +3,62 @@
 #include <thread>
 #include <chrono>
 
+
 #include "board.hpp"
+#include "snake.hpp"
 
 using namespace std;
 
 int main(int argc, char* argv[]){
+    // Initializes and allocates memory
     initscr();
-    refresh();
+    // ctrl+c exits
+    cbreak();
+    // input doesn't print
+    noecho();
+
+    
+    // init board
     Board b;
     b.initialize();
     b.addBorder();
+    
+    // init snake 
+    Snake s;
 
-    b.addAt(1, 1, '#');
-    b.refresh();
-    for (int i = 0; i < 5; i++){
-        this_thread::sleep_for(chrono::seconds(1));
-        b.addAt(1, i+2, '#');
-        b.refresh();
+
+    int ch;
+    // Attempt at main loop. 
+    // wgetch() is blocking. Need to fix.
+    while (true) {
+        // sleep 
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        ch = wgetch(b.getWin());
+        if (ch != ERR) {
+            if (ch == 'q') {  // Exit on 'q'
+                break;
+            }
+            // Handle other keys or perform actions
+            else if (ch == 'w'){
+                s.changeDirection(Direction::up);
+            }
+            else if (ch == 's'){
+                s.changeDirection(Direction::down);
+            }
+            else if (ch == 'a'){
+                s.changeDirection(Direction::left);
+            }
+            else if (ch == 'd'){
+                s.changeDirection(Direction::right);
+            }
+            s.move();
+            b.refresh();
+        }
     }
-
-    getch();
+    
+    // Deallocates memory
     endwin();
 
+
+    return 0;
 }
