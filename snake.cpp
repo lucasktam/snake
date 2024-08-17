@@ -10,10 +10,10 @@ Snake::Snake(Board& b, Game& g) : board(b), game(g) {
     length = 5;
     direction = Direction::up;
 
-    for (int i = 7; i < 13; i++){
+    for (int i = 7; i < 20; i++){
         push({7, i});
     }
-    head = {7, 13};
+    head = {7, 20};
     push(head);
     board.refresh();
     
@@ -31,20 +31,41 @@ void Snake::move(){
     switch(direction){
         case Direction::up: // -y 
             pop(bodyqueue.front());
-            
-            push({head.first - 1, head.second});
+            // If the next part is in the snake's body already, then snake dies. 
+            if (bodyset.find({head.first - 1, head.second}) != bodyset.end()){
+                kill();
+            }
+            else{
+                push({head.first - 1, head.second});
+            }
             break;
+
         case Direction::down: // +y
             pop(bodyqueue.front());
-            push({head.first + 1, head.second});
+            if (bodyset.find({head.first + 1, head.second}) != bodyset.end()){
+                kill();
+            }
+            else{
+                push({head.first + 1, head.second});
+            }
             break;
         case Direction::left: // -x
             pop(bodyqueue.front());
-            push({head.first, head.second - 1});
+            if (bodyset.find({head.first, head.second - 1}) != bodyset.end()){
+                kill();
+            }
+            else{
+                push({head.first, head.second - 1});
+            }
             break;
         case Direction::right: // +x
             pop(bodyqueue.front());
-            push({head.first, head.second + 1});
+            if (bodyset.find({head.first, head.second + 1}) != bodyset.end()){
+                kill();
+            }
+            else{
+                push({head.first, head.second + 1});
+            }
             break;
     }
 }
@@ -53,9 +74,7 @@ void Snake::move(){
 void Snake::changeDirection(Direction d){
     if (direction + d != 0){
         direction = d;
-        game.end();
     }
-    
 }
 
 // returns direction 
@@ -68,7 +87,6 @@ Direction Snake::getDirection() const {
 void Snake::push(std::pair<int, int> p){
     bodyqueue.push(p);
     bodyset.insert(p);
-    
     board.addAt(p.first, p.second, ' ' | A_REVERSE);
     head = p;
 }
