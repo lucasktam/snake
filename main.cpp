@@ -6,6 +6,7 @@
 
 #include "board.hpp"
 #include "snake.hpp"
+#include "game.hpp"
 
 using namespace std;
 
@@ -53,8 +54,6 @@ int main(int argc, char* argv[]){
             else if (ch == 'd'){
                 s.changeDirection(Direction::right);
             }
-            
-            
         }
         s.move();
     }
