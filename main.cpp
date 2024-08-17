@@ -32,8 +32,9 @@ int main(int argc, char* argv[]){
     // wgetch() is blocking. Need to fix.
     while (true) {
         // sleep 
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
         ch = wgetch(b.getWin());
+        
         if (ch != ERR) {
             if (ch == 'q') {  // Exit on 'q'
                 break;
@@ -51,9 +52,10 @@ int main(int argc, char* argv[]){
             else if (ch == 'd'){
                 s.changeDirection(Direction::right);
             }
-            s.move();
-            b.refresh();
+            
+            
         }
+        s.move();
     }
     
     // Deallocates memory
