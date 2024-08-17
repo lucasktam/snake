@@ -25,23 +25,30 @@ int main(int argc, char* argv[]){
     Board b;
     b.initialize();
     b.addBorder();
-    
+
+    // init game 
+    Game g;
+    g.start();
+
     // init snake 
-    Snake s(b);
+    Snake s(b, g);
 
     int ch;
-    // Attempt at main loop. 
-    // wgetch() is blocking. Need to fix.
-    while (true) {
-        // sleep 
+    
+    // Main game loop
+    // While game is playing: 
+    while (g.getStatus() == 1) {
+        // Wait
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        // Listen for input
         ch = wgetch(b.getWin());
         
+        // If ch is non-null
         if (ch != ERR) {
             if (ch == 'q') {  // Exit on 'q'
                 break;
             }
-            // Handle other keys or perform actions
+            // Change direction
             else if (ch == 'w'){
                 s.changeDirection(Direction::up);
             }
@@ -56,6 +63,7 @@ int main(int argc, char* argv[]){
             }
         }
         s.move();
+    
     }
     
     // Deallocates memory

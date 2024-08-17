@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <utility>
 #include "board.hpp"
+#include "game.hpp"
 
 // Custom hash function for std::pair<int, int>
 struct pair_hash {
@@ -27,10 +28,10 @@ enum Direction{
 class Snake{
 public:
     // default initializer - place holder for now. 
-    Snake(Board b);
+    Snake(Board& b, Game& g);
 
     // initializes length and direction to parameters
-    Snake(Board b, int l, Direction d);
+    Snake(Board& b, Game& g, int l, Direction d);
 
     // Pops the tail (front value)
     // Pushes a new head piece 
@@ -40,7 +41,7 @@ public:
     void changeDirection(Direction d);
     
     // returns direction 
-    Direction getDirection();
+    Direction getDirection() const;
 
     // pushes an element into both bodyqueue and bodyset. 
     // Then resets head. 
@@ -50,8 +51,10 @@ public:
     // then erases the element on the board. 
     void pop(std::pair<int, int> p);
 
+    void kill();
+
 private:
-    Board board;
+    Board& board;
     int length;
     Direction direction;
     std::queue<std::pair<int, int>> bodyqueue;
@@ -59,6 +62,8 @@ private:
     
     // The head is the back element of the queue.
     std::pair<int,int> head;
+
+    Game& game;
 };
 
 #endif

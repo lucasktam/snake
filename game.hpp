@@ -11,6 +11,8 @@ public:
 
     void end();
 
+    void setStatus(int n);
+    
     int getStatus() const;
 
 private:

@@ -14,6 +14,11 @@ void Game::end(){
     status = 0;
 }
 
+void Game::setStatus(int n){
+    status = n;
+}
+
+// 0 = not playing 1 = playing
 int Game::getStatus() const{
     return status; 
 }
