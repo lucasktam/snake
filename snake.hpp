@@ -27,10 +27,10 @@ enum Direction{
 class Snake{
 public:
     // default initializer - place holder for now. 
-    Snake();
+    Snake(Board b);
 
     // initializes length and direction to parameters
-    Snake(int l, Direction d);
+    Snake(Board b, int l, Direction d);
 
     // Pops the tail (front value)
     // Pushes a new head piece 
@@ -51,7 +51,7 @@ public:
     void pop(std::pair<int, int> p);
 
 private:
-    Board b;
+    Board board;
     int length;
     Direction direction;
     std::queue<std::pair<int, int>> bodyqueue;

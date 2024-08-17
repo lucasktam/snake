@@ -5,9 +5,10 @@ using namespace std;
 
 
 // default initializer - place holder for now. 
-Snake::Snake(){
+Snake::Snake(Board b){
     length = 5;
     direction = Direction::up;
+    board = b;
 
     for (int i = 7; i < 13; i++){
         push({7, i});
@@ -15,10 +16,12 @@ Snake::Snake(){
     }
     head = {7, 13};
     push(head);
+    board.refresh();
+    
 }
 
 // initializes length and direction to parameters
-Snake::Snake(int l, Direction d){
+Snake::Snake(Board b, int l, Direction d){
     length = l;
     direction = d;
 }
@@ -63,7 +66,8 @@ Direction Snake::getDirection(){
 void Snake::push(std::pair<int, int> p){
     bodyqueue.push(p);
     bodyset.insert(p);
-    b.addAt(p.first, p.second, '#');
+    
+    board.addAt(p.first, p.second, ' ' | A_REVERSE);
     head = p;
 }
 
@@ -73,6 +77,6 @@ void Snake::pop(std::pair<int, int> p){
     if (bodyset.find(p) != bodyset.end()){
         bodyset.erase(p);
         bodyqueue.pop();
-        b.addAt(p.first, p.second, ' ');
+        board.addAt(p.first, p.second, ' ');
     }
 }

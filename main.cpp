@@ -16,7 +16,9 @@ int main(int argc, char* argv[]){
     cbreak();
     // input doesn't print
     noecho();
-
+    // cursor is invisible and doesn't highlight
+    curs_set(0);
+   
     
     // init board
     Board b;
@@ -24,8 +26,7 @@ int main(int argc, char* argv[]){
     b.addBorder();
     
     // init snake 
-    Snake s;
-
+    Snake s(b);
 
     int ch;
     // Attempt at main loop. 
@@ -60,7 +61,6 @@ int main(int argc, char* argv[]){
     
     // Deallocates memory
     endwin();
-
 
     return 0;
 }
