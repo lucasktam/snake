@@ -12,6 +12,7 @@ using namespace std;
 
 int main(int argc, char* argv[]){
     const int BOARDHEIGHT = 20;
+    // BOARDWIDTH must be divisible by 2
     const int BOARDWIDTH = 48;
     // Initializes and allocates memory
     initscr();

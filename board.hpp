@@ -6,7 +6,7 @@
 
 class Board{
 public:
-    // Initializes Board to 20 and 28
+    // Initializes Board to 20 and 48
     // Attempts to set nodelay 
     Board();
 

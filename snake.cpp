@@ -1,6 +1,9 @@
 #include "snake.hpp"
 #include "board.hpp"
 #include "game.hpp"
+#include <cmath>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -8,12 +11,12 @@ using namespace std;
 // default initializer - place holder for now. 
 Snake::Snake(Board& b, Game& g) : board(b), game(g) {
     length = 5;
-    direction = Direction::up;
+    direction = Direction::right;
 
-    for (int i = 7; i < 20; i++){
-        push({7, i});
+    for (int i = board.getWidth() / 2 - 1; i < board.getWidth() / 2 + length * 2 - 1; i+= 2){
+        push({board.getHeight() / 2, i});
     }
-    head = {7, 20};
+    head = {board.getHeight() / 2, board.getWidth() / 2 + length * 2 - 1};
     push(head);
     board.refresh();
 }
@@ -43,7 +46,9 @@ void Snake::move(){
             // If the next part is part of the border, then snake dies. 
             // Vertical border: y = 0, y = board.getHeight()
             
-            if (head.first - 1 == 0){
+            if (head.first - 1 <= 0){
+                push({head.first - 1, head.second});
+                std::this_thread::sleep_for(std::chrono::milliseconds(200));
                 kill();
             }
             else{
@@ -56,7 +61,9 @@ void Snake::move(){
             if (bodyset.find({head.first + 1, head.second}) != bodyset.end()){
                 kill();
             }
-            if (head.first + 1 == board.getHeight() - 1){
+            if (head.first + 1 >= board.getHeight() - 1){
+                push({head.first + 1, head.second});
+                std::this_thread::sleep_for(std::chrono::milliseconds(200));
                 kill();
             }
             else{
@@ -69,8 +76,11 @@ void Snake::move(){
                 kill();
             }
             // Horizontal border: x = 0, x = board.getWidth()
-            if (head.second - 2 == 0){
+            if (head.second - 2 <= 0){
+                push({head.first, head.second - 2});
+                std::this_thread::sleep_for(std::chrono::milliseconds(200));
                 kill();
+                
             }
             else{
                 push({head.first, head.second - 2});
@@ -81,8 +91,11 @@ void Snake::move(){
             if (bodyset.find({head.first, head.second + 2}) != bodyset.end()){
                 kill();
             }
-            if (head.second + 2 == board.getWidth() - 2){
+            if (head.second + 2 >= board.getWidth() - 2){
+                push({head.first, head.second + 2});
+                std::this_thread::sleep_for(std::chrono::milliseconds(200));
                 kill();
+                
             }
             else{
                 push({head.first, head.second + 2});
