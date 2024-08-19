@@ -28,11 +28,18 @@ Snake::Snake(Board& b, Game& g, int l, Direction d) : board(b), game(g){
 // Pops the tail (front value)
 // Pushes a new head piece 
 void Snake::move(){
+
     switch(direction){
         case Direction::up: // -y 
             pop(bodyqueue.front());
             // If the next part is in the snake's body already, then snake dies. 
             if (bodyset.find({head.first - 1, head.second}) != bodyset.end()){
+                kill();
+            }
+            // If the next part is part of the border, then snake dies. 
+            // Vertical border: y = 0, y = board.getHeight()
+            
+            if (head.first - 1 == 0){
                 kill();
             }
             else{
@@ -45,6 +52,9 @@ void Snake::move(){
             if (bodyset.find({head.first + 1, head.second}) != bodyset.end()){
                 kill();
             }
+            if (head.first + 1 == board.getHeight() - 1){
+                kill();
+            }
             else{
                 push({head.first + 1, head.second});
             }
@@ -54,6 +64,10 @@ void Snake::move(){
             if (bodyset.find({head.first, head.second - 1}) != bodyset.end()){
                 kill();
             }
+            // Horizontal border: x = 0, x = board.getWidth()
+            if (head.second - 1 == 0){
+                kill();
+            }
             else{
                 push({head.first, head.second - 1});
             }
@@ -61,6 +75,9 @@ void Snake::move(){
         case Direction::right: // +x
             pop(bodyqueue.front());
             if (bodyset.find({head.first, head.second + 1}) != bodyset.end()){
+                kill();
+            }
+            if (head.second + 1 == board.getWidth() - 1){
                 kill();
             }
             else{

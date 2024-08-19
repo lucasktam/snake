@@ -31,8 +31,14 @@ public:
     // returns win
     WINDOW* getWin() const;
 
+    int getHeight() const;
+
+    int getWidth() const;
+
 private:
     WINDOW * win; 
+    int height;
+    int width;
 };
 
 

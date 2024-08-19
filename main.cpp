@@ -11,6 +11,8 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
+    const int BOARDHEIGHT = 20;
+    const int BOARDWIDTH = 48;
     // Initializes and allocates memory
     initscr();
     // ctrl+c exits
@@ -22,7 +24,7 @@ int main(int argc, char* argv[]){
    
     
     // init board
-    Board b;
+    Board b = Board(BOARDHEIGHT,BOARDWIDTH);
     b.initialize();
     b.addBorder();
 
