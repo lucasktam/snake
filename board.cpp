@@ -35,6 +35,9 @@ void Board::initialize(){
 // mvwaddch and refresh
 void Board::addAt(int y, int x, chtype ch){
     mvwaddch(win, y, x, ch);
+
+    // TEST 
+    mvwaddch(win, y, x+1, ch);
     refresh();
 }
 

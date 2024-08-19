@@ -16,7 +16,6 @@ Snake::Snake(Board& b, Game& g) : board(b), game(g) {
     head = {7, 20};
     push(head);
     board.refresh();
-    
 }
 
 // initializes length and direction to parameters
@@ -28,6 +27,11 @@ Snake::Snake(Board& b, Game& g, int l, Direction d) : board(b), game(g){
 // Pops the tail (front value)
 // Pushes a new head piece 
 void Snake::move(){
+    
+    // board.addAt(0, 0, 'a');
+    // board.addAt(board.getHeight()-1, 0, 'b');
+    // board.addAt(0, board.getWidth()-1, 'c');
+    // board.addAt(board.getHeight()-1, board.getWidth()-1, 'd');
 
     switch(direction){
         case Direction::up: // -y 
@@ -61,27 +65,27 @@ void Snake::move(){
             break;
         case Direction::left: // -x
             pop(bodyqueue.front());
-            if (bodyset.find({head.first, head.second - 1}) != bodyset.end()){
+            if (bodyset.find({head.first, head.second - 2}) != bodyset.end()){
                 kill();
             }
             // Horizontal border: x = 0, x = board.getWidth()
-            if (head.second - 1 == 0){
+            if (head.second - 2 == 0){
                 kill();
             }
             else{
-                push({head.first, head.second - 1});
+                push({head.first, head.second - 2});
             }
             break;
         case Direction::right: // +x
             pop(bodyqueue.front());
-            if (bodyset.find({head.first, head.second + 1}) != bodyset.end()){
+            if (bodyset.find({head.first, head.second + 2}) != bodyset.end()){
                 kill();
             }
-            if (head.second + 1 == board.getWidth() - 1){
+            if (head.second + 2 == board.getWidth() - 2){
                 kill();
             }
             else{
-                push({head.first, head.second + 1});
+                push({head.first, head.second + 2});
             }
             break;
     }
